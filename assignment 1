@@ -1,0 +1,263 @@
+ 
+   EXPERIMENT 1 : DDL COMMANDS 
+ 
+ A.DDL - CREATE
+
+//1.Create a table employee have following fields(emp_id,name,city,d_o_b,adhar_no).
+
+ mysql> create table employee(emp_id int,name varchar(20),city varchar(20),d_o_b date,adhar_no int(12));
+desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | date        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+//2.Create a table student(roll_no,name,age,address,gender) andd add constraints.
+	 roll_no : primary key 
+	 name : not null
+	 age : (0-99)
+	 gender : default m
+ mysql> create table student(roll_no int primary key,name varchar(20) not null,age int check(age>0 and age<99) not null,address   varchar(30),gender varchar(1) default 'm');
+ desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | NO   |     | NULL    |       |
+| age     | int         | NO   |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| gender  | varchar(1)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+//3.Create a temporary table student1 of student relation.
+
+mysql> create temporary table student1 select * from student;
+ desc student1;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   |     | NULL    | NULL  |
+| name    | varchar(20) | NO   |     | NULL    | NULL  |
+| age     | int         | NO   |     | NULL    | NULL  |
+| address | varchar(30) | YES  |     | NULL    | NULL  |
+| gender  | varchar(1)  | YES  |     | m       | NULL  |
++---------+-------------+------+-----+---------+-------+
+  
+  
+ //4.Create a duplicate table of employee.
+ 
+mysql> create table employeedupe select emp_id,name,city,d_o_b,adhar_no from employee;
+mysql> desc employeedupe;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | date        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+ //5.Create an invoice database having tables:
+
+mysql> create database INCOICE;
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| INCOICE            |
+| hadiya             |
+| hudha              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+
+
+mysql> use INCOICE;
+Database changed
+
+
+
+//Create a table customer(id,name,address,city,ph_no)
+
+mysql> create table customer(id int primary key,name varchar(20),address varchar(30),city varchar(10),ph_no int(10));
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| city    | varchar(10) | YES  |     | NULL    |       |
+| ph_no   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+//Create a table product with (pid,pname,price default 0)
+
+mysql> create table product(pid int primary key,pname varchar(20),price int default '0');
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | int         | YES  |     | 0       |       |
++-------+-------------+------+-----+---------+-------+
+
+
+
+ //Create a table invoice_master with inv_id,cust_id FK,inv_date.
+ 
+mysql> create table invoice_master(inv_id int primary key,cust_id int,inv_date date,constraint foreign key(cust_id) references customer(id));
+mysql>desc invoice_master;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| inv_id   | int  | NO   | PRI | NULL    |       |
+| cust_id  | int  | YES  | MUL | NULL    |       |
+| inv_date | date | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+
+
+
+//Create a table invoice_item with inv_id FK,pid FK,quantity.
+
+mysql> create table invoice_item(inv_id int,pid int,quantity varchar(20),constraint foreign key(inv_id) references invoice_master(inv_id),constraint foreign key(pid) references product(pid));
+mysql> desc invoice_item;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| inv_id   | int         | YES  | MUL | NULL    |       |
+| pid      | int         | YES  | MUL | NULL    |       |
+| quantity | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+B.DDL-ALTER & DROP
+
+//1.Add a column SSN at first position in table employee.
+
+ mysql> alter table employee add SSN int first;
+ mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  |     | NULL    |       |
+| emp_id   | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | date        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+//2. Change the datatype of column dob in year in table employee.
+
+ mysql> alter table employee modify d_o_b year;
+ mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  |     | NULL    |       |
+| emp_id   | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | year        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+//3.Delete the column emp_id in table employee.
+ 
+ mysql> alter table employee drop column emp_id;
+ mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | year        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+//4.Add the constraint unique for columns SSN,adhar_no in table employee.
+
+ mysql> alter table employee add constraint unique(SSN);
+ mysql> alter table employee add constraint unique(adhar_no);
+ mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  | UNI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| d_o_b    | year        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  | UNI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+//5.Delete the null constraint of age in student table.
+
+ mysql> alter table student modify column age int null;
+ mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | NO   |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| gender  | varchar(1)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+//6.Change the table name employee as person.
+
+ mysql> alter table employee rename to person;
+ mysql> show tables;
++-----------------+
+| Tables_in_hudha |
++-----------------+
+| employeedupe    |
+| person          |
+| student         |
+| student1        | 
++-----------------+
+
+
+
+//7.Delete the table student1.
+
+mysql> drop table student1;
+mysql> show tables;
++-----------------+
+| Tables_in_hudha |
++-----------------+
+| employeedupe    |
+| person          |
+| student         |
++-----------------+
+
+
