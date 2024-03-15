@@ -1,0 +1,210 @@
+ TCL COMMANDS
+ ------------
+ 
+ 1.COMMIT COMMAND
+ 
+     AUTOCOMMIT=OFF
+     --------------
+
+mysql> set autocommit="off";
+
+mysql> select * from comm;
++------+-------+
+| id   | place |
++------+-------+
+|    9 | mkm   |
+|    5 | clt   |
++------+-------+
+
+mysql> insert into comm values(1,'wyd');
+
+mysql> select * from comm;
++------+-------+
+| id   | place |
++------+-------+
+|    9 | mkm   |
+|    5 | clt   |
+|    1 | wyd   |
++------+-------+
+
+Quit terminal and open again
+
+mysql> select * from comm;
++------+-------+
+| id   | place |
++------+-------+
+|    9 | mkm   |
+|    5 | clt   |
++------+-------+
+
+
+ 
+ 2.ROLLBACK COMMAND
+ 
+         ROLLBACK
+	 --------
+	  
+mysql> set autocommit=off;
+
+mysql> select * from student;
++---------+---------+------+------------+--------+
+| roll_no | name    | age  | address    | gender |
++---------+---------+------+------------+--------+
+|       9 | diya    |   21 | calicut    | F      |
+|      10 | amala   |   21 | wayanad    | F      |
+|      16 | sinan   |   22 | calicut    | m      |
+|      17 | nishana |   21 | wayanad    | F      |
+|      18 | risvana |   21 | calicut    | F      |
+|      27 | tony    |   23 | malappuram | m      |
++---------+---------+------+------------+--------+
+
+mysql> delete from student where name="amala";
+
+mysql> select * from student;
++---------+---------+------+------------+--------+
+| roll_no | name    | age  | address    | gender |
++---------+---------+------+------------+--------+
+|       9 | diya    |   21 | calicut    | F      |
+|      16 | sinan   |   22 | calicut    | m      |
+|      17 | nishana |   21 | wayanad    | F      |
+|      18 | risvana |   21 | calicut    | F      |
+|      27 | tony    |   23 | malappuram | m      |
++---------+---------+------+------------+--------+
+
+mysql> rollback;
+
+mysql> select * from student;
++---------+---------+------+------------+--------+
+| roll_no | name    | age  | address    | gender |
++---------+---------+------+------------+--------+
+|       9 | diya    |   21 | calicut    | F      |
+|      10 | amala   |   21 | wayanad    | F      |
+|      16 | sinan   |   22 | calicut    | m      |
+|      17 | nishana |   21 | wayanad    | F      |
+|      18 | risvana |   21 | calicut    | F      |
+|      27 | tony    |   23 | malappuram | m      |
++---------+---------+------+------------+--------+
+
+mysql> commit;
+
+
+
+ 3. SAVEPOINT COMMAND
+ 
+   SAVEPOINT
+   ---------
+   
+mysql> create table tab(id int,name varchar(10),age int);
+
+mysql> insert into tab values(10,'amala',21);
+
+mysql> savepoint s1;
+
+mysql> insert into tab values(12,'hudha',21);
+
+mysql> savepoint s2;
+
+mysql> insert into tab values(9,'shamla',21);
+
+mysql> savepoint s3;
+
+mysql> select * from tab;
++------+--------+------+
+| id   | name   | age  |
++------+--------+------+
+|   10 | amala  |   21 |
+|   12 | hudha  |   21 |
+|    9 | shamla |   21 |
++------+--------+------+
+
+mysql> rollback to s2;
+
+mysql> select * from tab;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|   10 | amala |   21 |
+|   12 | hudha |   21 |
++------+-------+------+
+
+mysql> commit;
+
+
+
+ DCL COMMANDS
+ ------------
+ 
+  GRANT
+  -----
+
+
+mysql> create user hudhaah @'localhost' identified by 'Hudhafthma08@';
+
+mysql> create user fathima @'localhost' identified by 'Fathimahudha08@';
+
+mysql> grant all on INCOICE.customer to hudhaah @'localhost';
+
+mysql> show grants for hudhaah@'localhost';
++-----------------------------------------------------------------------+
+| Grants for hudhaah@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `hudhaah`@`localhost`                           |
+| GRANT ALL PRIVILEGES ON `INCOICE`.`customer` TO `hudhaah`@`localhost` |
++-----------------------------------------------------------------------+
+
+mysql> grant select,update on INCOICE.customer to hudhaah@'localhost';
+
+mysql> show grants for hudhaah@'localhost';
++-----------------------------------------------------------------------+
+| Grants for hudhaah@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `hudhaah`@`localhost`                           |
+| GRANT ALL PRIVILEGES ON `INCOICE`.`customer` TO `hudhaah`@`localhost` |
++-----------------------------------------------------------------------+
+
+mysql> grant insert,select on INCOICE.customer to hudhaah@'localhost';
+
+mysql> show grants for hudhaah@'localhost';
++-----------------------------------------------------------------------+
+| Grants for hudhaah@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `hudhaah`@`localhost`                           |
+| GRANT ALL PRIVILEGES ON `INCOICE`.`customer` TO `hudhaah`@`localhost` |
++-----------------------------------------------------------------------+
+
+
+mysql> grant update,delete on INCOICE.* to fathima@'localhost';
+
+mysql> show grants for fathima@'localhost';
++--------------------------------------------------------------+
+| Grants for fathima@localhost                                 |
++--------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `fathima`@`localhost`                  |
+| GRANT UPDATE, DELETE ON `INCOICE`.* TO `fathima`@`localhost` |
++--------------------------------------------------------------+
+
+
+
+ REVOKE
+ ------
+ 
+mysql> revoke select on INCOICE.customer from hudhaah@'localhost';
+
+mysql> show grants for hudhaah@'localhost'
++------------------------------------------------------------+
+| Grants for hudhaah@localhost                               |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `hudhaah`@`localhost`                |
++------------------------------------------------------------+
+
+
+mysql> revoke delete on INCOICE.* from fathima@'localhost';
+
+mysql> show grants for fathima@'localhost';
++------------------------------------------------------+
+| Grants for fathima@localhost                         |
++------------------------------------------------------+
+| GRANT USAGE ON *.* TO `fathima`@`localhost`          |
+| GRANT UPDATE ON `INCOICE`.* TO `fathima`@`localhost` |
++------------------------------------------------------+
+
