@@ -1,0 +1,118 @@
+//LIST ALL CUSTOMER DETAILS
+
+mysql> select * from customer;
++-------+---------+---------+--------+------------+
+| id    | name    | address | city   | ph_no      |
++-------+---------+---------+--------+------------+
+| 10004 | Athulya | opqrs   | Idukki | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm    | 7845963210 |
++-------+---------+---------+--------+------------+
+
+
+
+//LIST ALL INVOICE ITEMS,AVOID DUPLICATE
+
+mysql> select pid from invoice_item;
++------+
+| pid  |
++------+
+|  333 |
+|  555 |
++------+
+mysql> select distinct pid from invoice_item;
++------+
+| pid  |
++------+
+|  333 |
+|  555 |
++------+
+
+
+
+//LIST PRODUCT PRICE BETWEEN 50 & 150
+
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql>  select price from product where price between 50 AND 150;
++-------+
+| price |
++-------+
+|   110 |
++-------+
+
+
+
+//LIST THE CUSTOMER DETAILS WHO LIVES IN 'ERNAKULAM','TVM'
+
+mysql> select * from customer;
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
++-------+---------+---------+-----------+------------+
+
+mysql> select * from customer where city IN("ernakulam","tvm");
++-------+--------+---------+-----------+------------+
+| id    | name   | address | city      | ph_no      |
++-------+--------+---------+-----------+------------+
+| 10005 | Remmya | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla | qwerty  | ernakulam | 1452457896 |
++-------+--------+---------+-----------+------------+
+
+
+
+//LIST THE INVOICE DETAILS FROM 1ST JAN 2021 TO 31ST MARCH 2021
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2021-01-04 |
+|    102 |   10002 | 2021-01-07 |
+|    103 |   10003 | 2021-01-15 |
+|    104 |   10004 | 2021-01-25 |
+|    105 |   10005 | 2023-10-25 |
++--------+---------+------------+
+
+mysql> select * from invoice_master where inv_date between 20210101 and 20210331;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2021-01-04 |
+|    102 |   10002 | 2021-01-07 |
+|    103 |   10003 | 2021-01-15 |
+|    104 |   10004 | 2021-01-25 |
++--------+---------+------------+
+
+
+
+//LIST THE CUSTOMER DETAILS WHO NOT LIVE IN "TVM"
+
+mysql> select * from customer;
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
++-------+---------+---------+-----------+------------+
+
+mysql> select * from customer where city NOT IN("tvm");
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
++-------+---------+---------+-----------+------------+
