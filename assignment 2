@@ -1,0 +1,486 @@
+  EXPERIMENT 2 : DML COMMANDS
+
+
+//1.INSERT VALUES IN PERSON TABLE.
+
+mysql> insert into person values(1,"hudha","calicut",2002,8188):
+mysql> insert into person values(2,"shamla","mlprm",2002,8234);
+mysql> insert into person values(3,"lumna","ekm",2003,8014);
+mysql> insert into person values(4,"hadiya","tvm",2001,9021);
+mysql> insert into person values(5,"nishana","wyd",2002,7612);
+
+mysql> select * from person;
++------+---------+---------+-------+----------+
+| SSN  | name    | city    | d_o_b | adhar_no |
++------+---------+---------+-------+----------+
+|    1 | hudha   | calicut |  2002 |     8188 |
+|    2 | shamla  | mlprm   |  2002 |     8234 |
+|    3 | lumna   | ekm     |  2003 |     8014 |
+|    4 | hadiya  | tvm     |  2001 |     9021 |
+|    5 | nishana | wyd     |  2002 |     7612 |
++------+---------+---------+-------+----------+
+
+
+//2.INSERT VALUES INTO STUDENT TABLE.
+ 
+mysql> insert into student values(17,"nishana",21,"wayanad","F");
+mysql> insert into student values(27,"tony",23,"malappuram",default);
+mysql> insert into student values(09,"diya",21,"calicut","F");
+mysql> insert into student values(18,"risvana",21,"calicut","F");
+mysql> insert into student values(16,"sinan",22,"calicut",default);
+
+mysql> select * from student;
++---------+---------+------+------------+--------+
+| roll_no | name    | age  | address    | gender |
++---------+---------+------+------------+--------+
+|       9 | diya    |   21 | calicut    | F      |
+|      16 | sinan   |   22 | calicut    | m      |
+|      17 | nishana |   21 | wayanad    | F      |
+|      18 | risvana |   21 | calicut    | F      |
+|      27 | tony    |   23 | malappuram | m      |
++---------+---------+------+------------+--------+
+
+
+//3.INSERT VALUES IN INVOICE DATABASE.
+ 
+ TABLE STUDENT
+ -------------
+ 
+
+mysql> insert into customer values(10001,"Ajay","abcdefg","tvm",9544458967);
+mysql> insert into customer values(10002,"Resmi","uvwxyz","calicut",9978547682);
+mysql> insert into customer(id,name,address,city)values(10003,"Divya","jklmno","calicut");
+mysql> insert into customer values(10004,"Athulya","defghij","ekm",9970025482)
+mysql> insert into customer values(10005,"Remmya","pqrstuv","tvm",7845963210);
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | defghij | ekm     | 9970025482 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+ TABLE INVOICE_MASTER
+ ---------------------
+
+mysql>  insert into invoice_master values(101,10001,20210104);
+mysql>  insert into invoice_master values(102,10002,20210107);
+mysql>  insert into invoice_master values(103,10003,20210115);
+mysql>  insert into invoice_master values(104,10004,20210125);
+mysql>  insert into invoice_master values(105,10005,20231025);
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2021-01-04 |
+|    102 |   10002 | 2021-01-07 |
+|    103 |   10003 | 2021-01-15 |
+|    104 |   10004 | 2021-01-25 |
+|    105 |   10005 | 2023-10-25 |
++--------+---------+------------+
+
+
+ TABLE PRODUCT
+ -------------
+ 
+mysql>  insert into product values(111,"Book",40);
+mysql>  insert into product values(222,"Bag",240);set foreign_key_checks=0;
+
+mysql>  insert into product values(333,"Soap",30);
+mysql>  insert into product values(444,"Pen",10);
+mysql>  insert into product values(555,"Box",35);
+
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    40 |
+| 222 | Bag   |   240 |
+| 333 | Soap  |    30 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    35 |
++-----+-------+-------+
+
+
+ TABLE INVOICE_ITEM
+ ------------------
+ 
+mysql> insert into invoice_item values(101,111,5);
+mysql> insert into invoice_item values(102,222,1);
+mysql> insert into invoice_item values(103,333,2);
+mysql> insert into invoice_item values(104,444,1);
+mysql> insert into invoice_item values(105,555,2);
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 1        |
+|    103 |  333 | 2        |
+|    104 |  444 | 1        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+
+//UPDATE PRICE OF A PARTICULAR PRODUCT
+
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    40 |
+| 222 | Bag   |   240 |
+| 333 | Soap  |    30 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    35 |
++-----+-------+-------+
+
+mysql>  update product set price=200 where pid=222;
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    40 |
+| 222 | Bag   |   200 |
+| 333 | Soap  |    30 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    35 |
++-----+-------+-------+
+
+
+//CHANGE NAME OF CITY
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | defghij | ekm     | 9970025482 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+mysql> update customer set City="wayanad" where City="ekm";
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | defghij | wayanad | 9970025482 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+//UPDATE PRICE WITH 2%
+
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    40 |
+| 222 | Bag   |   200 |
+| 333 | Soap  |    30 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    35 |
++-----+-------+-------+
+
+mysql> update product set price=price+(price*2/100);
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    41 |
+| 222 | Bag   |   204 |
+| 333 | Soap  |    31 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    36 |
++-----+-------+-------+
+
+//CHANGE ADDRESS
+
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | defghij | wayanad | 9970025482 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+mysql> update customer set address="opqrs",city="Idukki",ph_no=9826522123 where id=10004;
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+//CHANGE QUANTITY
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 1        |
+|    103 |  333 | 2        |
+|    104 |  444 | 1        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+mysql> update invoice_item set quantity=6 where inv_id=102;;
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    104 |  444 | 1        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+
+//DELETE RECORD OF 10001
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10001 | Ajay    | abcdefg | tvm     | 9544458967 |
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    104 |  444 | 1        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+mysql> set foreign_key_checks=0;
+mysql>  delete from customer where id=10001;
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+//DELETE ITEMS OF QUANTITY<2
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    104 |  444 | 1        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+mysql> delete from invoice_item where quantity<2;
+mysql> select * from invoice_item;
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+
+//DELETE PURCHASE DETAILS OF BOOK
+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  111 | 5        |
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+mysql> select * from product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 111 | Book  |    41 |
+| 222 | Bag   |   204 |
+| 333 | Soap  |    31 |
+| 444 | Pen   |    10 |
+| 555 | Box   |    36 |
++-----+-------+-------+
+
+mysql>  delete from invoice_item where inv_id=101 and pid=111;
+mysql> select * from invoice_item;
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+
+//DELETE DETAILS OF EMPLOYEE WHO DOES NOT HAVE PHONE NUMBER
+
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10003 | Divya   | jklmno  | calicut | NULL       |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+mysql> set foreign_key_checks=0;
+mysql> delete from customer where id=10003;
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+//DELETE ALL RECORD FROM STUDENT TABLE
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| INCOICE            |
+| hadiya             |
+| hudha              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+
+mysql> use hudha;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> show tables;
++-----------------+
+| Tables_in_hudha |
++-----------------+
+| comm            |
+| employeedupe    |
+| person          |
+| student         |
+| tab             |
++-----------------+
+
+mysql> select * from student;
++---------+---------+------+------------+--------+
+| roll_no | name    | age  | address    | gender |
++---------+---------+------+------------+--------+
+|       9 | diya    |   21 | calicut    | F      |
+|      10 | amala   |   21 | wayanad    | F      |
+|      16 | sinan   |   22 | calicut    | m      |
+|      17 | nishana |   21 | wayanad    | F      |
+|      18 | risvana |   21 | calicut    | F      |
+|      27 | tony    |   23 | malappuram | m      |
++---------+---------+------+------------+--------+
+
+mysql> delete from student;
+Query OK, 6 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+
+//DELETE INVOICE DETAILS OF A PARTICULAR CUSTOMER
+
+mysql> use INCOICE;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from customer;
++-------+---------+---------+---------+------------+
+| id    | name    | address | city    | ph_no      |
++-------+---------+---------+---------+------------+
+| 10002 | Resmi   | uvwxyz  | calicut | 9978547682 |
+| 10004 | Athulya | opqrs   | Idukki  | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm     | 7845963210 |
++-------+---------+---------+---------+------------+
+
+
+mysql> delete from customer where id=10002;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-------+---------+---------+--------+------------+
+| id    | name    | address | city   | ph_no      |
++-------+---------+---------+--------+------------+
+| 10004 | Athulya | opqrs   | Idukki | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm    | 7845963210 |
++-------+---------+---------+--------+------------+
+
+
+//DELETE THE RECORD OF INVOICE_ITEM TABLE ITS PURCHASE QUANTITY IS HIGH
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    102 |  222 | 6        |
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
+mysql> delete from invoice_item where quantity=6;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
++--------+------+----------+
+
