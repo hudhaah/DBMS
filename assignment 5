@@ -1,0 +1,99 @@
+//LIST THE CUSTOMER NAMES OF INVOICE DATE 3RD FEB 2018
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2021-01-04 |
+|    102 |   10002 | 2021-01-07 |
+|    103 |   10003 | 2021-01-15 |
+|    104 |   10004 | 2021-01-25 |
+|    105 |   10005 | 2023-10-25 |
+|    106 |   10006 | 2021-02-18 |
+|    107 |   10007 | 2021-05-18 |
++--------+---------+------------+
+mysql> select * from customer;
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10001 | Ajay    | werftys | ernakulam | 9544781263 |
+| 10002 | Liya    | rewdf   | tvm       | 4571236985 |
+| 10003 | Sona    | olpkiuj | tvm       |  784596263 |
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
+| 10007 | Safna   | kiliojd | wyd       | 7845123697 |
++-------+---------+---------+-----------+------------+
+mysql> select name from customer where id IN(select cust_id from invoice_master
+where inv_date='2021-05-18');
++-------+
+| name  |
++-------+
+| Safna |
++-------+
+
+
+//LIST THE PRODUCT NAME AND PRICE OF EACH INVOICE ITEM
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
+|    102 |  444 | 4        |
++--------+------+----------+
+
+mysql> select pname,price from product where pid IN(select pid from invoice_item);
++-------+-------+
+| pname | price |
++-------+-------+
+| Soap  |    31 |
+| Pen   |    10 |
+| Box   |    36 |
++-------+-------+
+
+
+
+//LIST THE PRODUCT NAMES,ONLY INCLUDE THEIR PURCHASED QUANTITY MORE THAN 3
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
+|    102 |  444 | 4        |
++--------+------+----------+
+
+mysql> select pname from product where pid IN(select pid from invoice_item where quantity>3);
++-------+
+| pname |
++-------+
+| Pen   |
++-------+
+
+
+
