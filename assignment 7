@@ -1,0 +1,94 @@
+//1.List the pname and quantity of invoice items
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
+|    102 |  444 | 4        |
++--------+------+----------+
+
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql> select pname,quantity from product INNER JOIN invoice_item ON product.pid=invoice_item.pid;
++-------+----------+
+| pname | quantity |
++-------+----------+
+| Soap  | 2        |
+| Pen   | 4        |
+| Box   | 2        |
++-------+----------+
+
+
+//2.Display invoice details of transaction dated 25-10-2023
+
+
+mysql> select * from customer;
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10001 | Ajay    | werftys | ernakulam | 9544781263 |
+| 10002 | Liya    | rewdf   | tvm       | 4571236985 |
+| 10003 | Sona    | olpkiuj | tvm       |  784596263 |
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
+| 10007 | Safna   | kiliojd | wyd       | 7845123697 |
+| 10008 | Nushri  | edwsqa  | clt       | 7845123698 |
++-------+---------+---------+-----------+------------+
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2021-01-04 |
+|    102 |   10002 | 2021-01-07 |
+|    103 |   10003 | 2021-01-15 |
+|    104 |   10004 | 2021-01-25 |
+|    105 |   10005 | 2023-10-25 |
+|    106 |   10006 | 2021-02-18 |
+|    107 |   10007 | 2021-05-18 |
+|    108 |   10008 | 2022-07-02 |
++--------+---------+------------+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    103 |  333 | 2        |
+|    105 |  555 | 2        |
+|    102 |  444 | 4        |
++--------+------+----------+
+
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql> select * from customer INNER JOIN invoice_master ON customer.id=invoice_master.cust_id INNER JOIN invoice_item ON invoice_master.inv_id=invoice_item.inv_id INNER JOIN product ON invoice_item.pid=product.pid WHERE inv_date=20231025;
+
++-------+--------+---------+------+------------+--------+---------+------------+--------+------+----------+-----+-------+-------+
+| id    | name   | address | city | ph_no      | inv_id | cust_id | inv_date   | inv_id | pid  | quantity | pid | pname | price |
++-------+--------+---------+------+------------+--------+---------+------------+--------+------+----------+-----+-------+-------+
+| 10005 | Remmya | pqrstuv | tvm  | 7845963210 |    105 |   10005 | 2023-10-25 |    105 |  555 | 2        | 555 | Box   |    36 |
++-------+--------+---------+------+------------+--------+---------+------------+--------+------+----------+-----+-------+-------+
+
+
