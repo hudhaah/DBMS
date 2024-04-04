@@ -1,0 +1,45 @@
+  PL SQL PROGRAMS-FUNCTIONS
+  -------------------------
+    
+ 1.Create a function to calculate price_range(low, medium, high) of each product. If price<=5 indicate as low, upto 50 indicate as medium, and above as high.
+ 
+ mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 111 | Book   |    41 |
+| 222 | Bag    |   204 |
+| 333 | Soap   |    31 |
+| 444 | Pen    |    10 |
+| 555 | Box    |    36 |
+| 666 | Bottle |   110 |
++-----+--------+-------+
+
+mysql> delimiter //
+mysql> create FUNCTION PriceInd(price int) returns varchar(20)
+    -> deterministic
+    -> begin
+    -> declare Price_Ind varchar(20);
+    -> if price<=35 then set Price_Ind='LOW';
+    -> elseif(price>35 and price<=200) then set Price_Ind='MEDIUM';
+    -> elseif price>200 then set Price_Ind='HIGH';
+    -> End if;
+    -> return(Price_Ind);
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select pid,pname,price,PriceInd(price) from product;
+    -> //
+    
++-----+--------+-------+-----------------+
+| pid | pname  | price | PriceInd(price) |
++-----+--------+-------+-----------------+
+| 111 | Book   |    41 | MEDIUM          |
+| 222 | Bag    |   204 | HIGH            |
+| 333 | Soap   |    31 | LOW             |
+| 444 | Pen    |    10 | LOW             |
+| 555 | Box    |    36 | MEDIUM          |
+| 666 | Bottle |   110 | MEDIUM          |
++-----+--------+-------+-----------------+
+
