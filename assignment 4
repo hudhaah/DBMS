@@ -116,3 +116,4 @@ mysql> select * from customer where city NOT IN("tvm");
 | 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
 | 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
 +-------+---------+---------+-----------+------------+
+//VERIFIED
