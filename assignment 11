@@ -1,0 +1,97 @@
+mysql> use INCOICE;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql>delimiter //
+mysql> create temporary table cust select * from customer;
+    -> //
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc cust;
+    -> //
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   |     | NULL    | NULL  |
+| name    | varchar(20) | YES  |     | NULL    | NULL  |
+| address | varchar(30) | YES  |     | NULL    | NULL  |
+| city    | varchar(10) | YES  |     | NULL    | NULL  |
+| ph_no   | bigint      | YES  |     | NULL    | NULL  |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create TRIGGER customer_trig after update on customer for each row begin insert into cust set id=New.id,name=New.name,address=New.address,city=New.city,ph_no=New.ph_no;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from customer;
+    -> //
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10001 | Ajay    | werftys | ernakulam | 9544781263 |
+| 10002 | Liya    | rewdf   | tvm       | 4571236985 |
+| 10003 | Sona    | olpkiuj | tvm       |  784596263 |
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
+| 10007 | Safna   | kiliojd | wyd       | 7845123697 |
+| 10008 | Nushri  | edwsqa  | clt       | 7845123698 |
++-------+---------+---------+-----------+------------+
+8 rows in set (0.00 sec)
+
+
+mysql> update Customer set City ="Idukki" where Id=10007;
+    -> //
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> update Customer set Phone_No =9870564534 where Id=10006;
+    -> //
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Customer1;
+    -> //
+    
+ +-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10001 | Ajay    | werftys | ernakulam | 9544781263 |
+| 10002 | Liya    | rewdf   | tvm       | 4571236985 |
+| 10003 | Sona    | olpkiuj | tvm       |  784596263 |
+| 10004 | Athulya | opqrs   | Idukki    | 9826522123 |
+| 10005 | Remmya  | pqrstuv | tvm       | 7845963210 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
+| 10007 | Safna   | kiliojd | wyd       | 7845123697 |
+| 10008 | Nushri  | edwsqa  | clt       | 7845123698 |
+| 10007 | Safna   | kiliojd | Idukki    | 7845123697 |
+| 10006 | Shamla  | qwerty  | ernakulam | 1452457896 |
++-------+---------+---------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> truncate cust;
+    -> //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from cust;
+    -> //
+Empty set (0.00 sec)
+
+mysql> update customer set city ="Tvm" where id=10007;
+    -> //
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Customer1;
+    -> //
++-------+---------+---------+-----------+------------+
+| id    | name    | address | city      | ph_no      |
++-------+---------+---------+-----------+------------+
+| 10007 | Safna   | kiliojd | Tvm       | 7845123697 |
++-------+---------+---------+-----------+------------+
