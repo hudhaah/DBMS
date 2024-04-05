@@ -92,3 +92,4 @@ mysql> select * from customer INNER JOIN invoice_master ON customer.id=invoice_m
 +-------+--------+---------+------+------------+--------+---------+------------+--------+------+----------+-----+-------+-------+
 
 
+//VERIFIED
