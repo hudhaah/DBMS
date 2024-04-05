@@ -484,3 +484,4 @@ mysql> select * from invoice_item;
 |    105 |  555 | 2        |
 +--------+------+----------+
 
+//VERIFIED
