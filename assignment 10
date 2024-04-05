@@ -42,4 +42,4 @@ mysql> select pid,pname,price,PriceInd(price) from product;
 | 555 | Box    |    36 | MEDIUM          |
 | 666 | Bottle |   110 | MEDIUM          |
 +-----+--------+-------+-----------------+
-
+//VERIFIED
