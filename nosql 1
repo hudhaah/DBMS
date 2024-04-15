@@ -1,0 +1,168 @@
+//NOSQL CRUD EXPERIMENT 1
+
+//1.CREATE AN INVOICE DATABASE AND COLLETIONS:CUSTOMER,PRODUCT
+
+test> use INVOICE
+switched to db INVOICE
+INVOICE> db.CUSTOMER.insertMany([{id:10001,name:"Hudha",address:"abcd",city:"Calicut",age:20},{id:10002,name:"Anugrah",address:"qwerty",city:"tvm",age:52},{id:10003,name:"Amala",address:"pqrs",city:"ekm",age:51},{id:10004,name:"Sandra",address:"defg",city:"wyd",age:25}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('661ca50a2c0232cc6fef634b'),
+    '1': ObjectId('661ca50a2c0232cc6fef634c'),
+    '2': ObjectId('661ca50a2c0232cc6fef634d'),
+    '3': ObjectId('661ca50a2c0232cc6fef634e')
+  }
+}
+INVOICE> db.PRODUCT.insertMany([{pid:100,pname:"book",price:45},{pid:103,pname:"pen",price:10},{pid:109,pname:"scale",price:5}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('661ca59a2c0232cc6fef634f'),
+    '1': ObjectId('661ca59a2c0232cc6fef6350'),
+    '2': ObjectId('661ca59a2c0232cc6fef6351')
+  }
+}
+
+
+//2.FIND ALL DOCUMENTS FROM COLLECTION CUSTOMER
+
+INVOICE> db.CUSTOMER.find().pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634b'),
+    id: 10001,
+    name: 'Hudha',
+    address: 'abcd',
+    city: 'Calicut',
+    age: 20
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634e'),
+    id: 10004,
+    name: 'Sandra',
+    address: 'defg',
+    city: 'wyd',
+    age: 25
+  }
+]
+
+INVOICE> db.PRODUCT.find().pretty()
+[
+  {
+    _id: ObjectId('661ca59a2c0232cc6fef634f'),
+    pid: 100,
+    pname: 'book',
+    price: 45
+  },
+  {
+    _id: ObjectId('661ca59a2c0232cc6fef6350'),
+    pid: 103,
+    pname: 'pen',
+    price: 10
+  },
+  {
+    _id: ObjectId('661ca59a2c0232cc6fef6351'),
+    pid: 109,
+    pname: 'scale',
+    price: 5
+  }
+]
+
+
+
+//3.UPDATE CITY IN COLLECTION CUSTOMER
+
+INVOICE> db.CUSTOMER.updateOne({city:"wyd"},{$set:{city:"kochi"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+INVOICE> db.CUSTOMER.find().pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634b'),
+    id: 10001,
+    name: 'Hudha',
+    address: 'abcd',
+    city: 'Calicut',
+    age: 20
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634e'),
+    id: 10004,
+    name: 'Sandra',
+    address: 'defg',
+    city: 'kochi',
+    age: 25
+  }
+]
+
+
+//4.DELETE THE FIRST MATCHED DOCUMENT WHOSE CITY IS CALICUT
+
+INVOICE> db.CUSTOMER.deleteOne({city:"Calicut"})
+{ acknowledged: true, deletedCount: 1 }
+INVOICE> db.CUSTOMER.find().pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634e'),
+    id: 10004,
+    name: 'Sandra',
+    address: 'defg',
+    city: 'kochi',
+    age: 25
+  }
+]
+
