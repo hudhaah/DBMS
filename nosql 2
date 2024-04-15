@@ -1,0 +1,99 @@
+//NOSQL EXPERIMENT 2
+
+INVOICE> db.CUSTOMER.find().pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634e'),
+    id: 10004,
+    name: 'Sandra',
+    address: 'defg',
+    city: 'kochi',
+    age: 25
+  }
+]
+
+
+//1.DISPLAY CUSTOMER DOCUMENTS HAVING CITY EKM,TVM
+
+INVOICE> db.CUSTOMER.find({$or:[{city:"ekm"},{city:"tvm"}]})
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  }
+]
+
+
+//2.DISPLAY ALL CUSTOMER DOCUMENTS WHO HAVE AGE>50
+
+INVOICE> db.CUSTOMER.find({age:{$gt:50}}).pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634c'),
+    id: 10002,
+    name: 'Anugrah',
+    address: 'qwerty',
+    city: 'tvm',
+    age: 52
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  }
+]
+
+
+//3.FIND CUSTOMER DOCUMENTS WHO NOT LIVE IN TVM
+
+INVOICE> db.CUSTOMER .find({city:{$ne:"tvm"}}).pretty()
+[
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634d'),
+    id: 10003,
+    name: 'Amala',
+    address: 'pqrs',
+    city: 'ekm',
+    age: 51
+  },
+  {
+    _id: ObjectId('661ca50a2c0232cc6fef634e'),
+    id: 10004,
+    name: 'Sandra',
+    address: 'defg',
+    city: 'kochi',
+    age: 25
+  }
+]
+
