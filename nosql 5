@@ -1,0 +1,20 @@
+//NOSQL EXPERIMENT 5
+
+//1.CREATE AN INDEX FOR THE COLLECTION CUSTOMER USING THE FIELD CUSTOMER_NAME
+
+
+dd> use INVOICE
+switched to db INVOICE
+
+INVOICE> db.CUSTOMER.createIndex({Name:1})
+Name_1
+
+
+INVOICE> db.CUSTOMER.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { Name: 1 }, name: 'Name_1' }
+]
+
+
+
