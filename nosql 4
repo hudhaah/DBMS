@@ -1,0 +1,80 @@
+//NOSQL EXPERIMENT 4
+
+//1.CREATE A USER “CUSTOMER1” AND GRANT THE READ ROLE IN THE INVOICE DATABASE
+
+(base) ksb@ksb-H410M-S2-V2:~$ mongosh
+
+test> db.createUser({user:"Customer1",pwd:"1234",roles:[{role:"read",db:"INVOICE"}]})
+{ ok: 1 }
+
+
+//2.CREATE THE BACKUP FOR THE INVOICE DATABASE
+
+test> use dd
+switched to db dd
+
+dd> db.createCollection("customer")
+{ ok: 1 }
+
+dd> show dbs
+INVOICE  112.00 KiB
+admin    132.00 KiB
+config   108.00 KiB
+dd         8.00 KiB
+ksb       40.00 KiB
+local     72.00 KiB
+dd> 
+[1]+  Stopped                 mongosh
+
+(base) ksb@ksb-H410M-S2-V2:~$ mongodump --db dd
+2024-04-18T12:49:29.173+0530	writing dd.customer to dump/dd/customer.bson
+2024-04-18T12:49:29.173+0530	done dumping dd.customer (0 documents)
+
+(base) ksb@ksb-H410M-S2-V2:~$ mongosh
+
+test> show dbs
+INVOICE  112.00 KiB
+admin    180.00 KiB
+config   108.00 KiB
+dd         8.00 KiB
+ksb       40.00 KiB
+local     72.00 KiB
+
+test> use dd
+switched to db dd
+
+dd> db.dropDatabase()
+{ ok: 1, dropped: 'dd' }
+
+dd> use test
+switched to db test
+
+test> show dbs
+INVOICE  112.00 KiB
+admin    180.00 KiB
+config   108.00 KiB
+ksb       40.00 KiB
+local     72.00 KiB
+test> 
+[2]+  Stopped                 mongosh
+
+
+//3.RESTORE A PARTICULAR DATABASE OR A COLLECTION
+
+ksb@ksb-H410M-S2-V2:~$ mongorestore --db dd dump/dd
+
+test> show dbs
+INVOICE  112.00 KiB
+admin    180.00 KiB
+config   108.00 KiB
+dd         8.00 KiB
+ksb       40.00 KiB
+local     72.00 KiB
+
+test> use dd
+switched to db dd
+
+dd> show collections
+customer
+
+
